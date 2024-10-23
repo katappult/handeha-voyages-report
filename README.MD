@@ -19,9 +19,7 @@ With the virtual environment activated, install the dependencies:
 Run the API from the command line with the following syntax:
 
 ```
-python ./run.py
-or
-waitress-serve --listen=127.0.0.1:5000 run:app
+python ./main.py
 ```
 
 build the docker image
