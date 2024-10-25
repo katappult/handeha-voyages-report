@@ -1,9 +1,10 @@
 from datetime import timedelta, datetime
-from flask_compress import Compress
+
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from flasgger import Swagger
 from flask import Flask
+from flask_compress import Compress
 from flask_cors import CORS
 from flask_restful import Api
 

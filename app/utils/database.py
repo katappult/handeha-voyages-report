@@ -106,6 +106,8 @@ class DatabaseFetcher:
             return df_navigation_history
         except Exception as e:
             print(f"Error fetching cleaned navigation history: {e}")
+        finally:
+            self.session.close()
 
     def fetch_cleaned_search_history(self, start_date=None, end_date=None):
         try:
@@ -124,10 +126,13 @@ class DatabaseFetcher:
             return df_search_history
         except Exception as e:
             print(f"Error fetching cleaned search history: {e}")
+        finally:
+            self.session.close()
 
     def fetch_gen_global_navigation_history(self, start_date=None, end_date=None):
         try:
             query = self.session.query(GenGlobalNavigationHistory)
+            print("query ", query)
 
             if start_date:
                 query = query.filter(GenGlobalNavigationHistory.create_date >= start_date)
@@ -142,6 +147,8 @@ class DatabaseFetcher:
             return df_navigation_history
         except Exception as e:
             print(f"Error fetching gen global navigation history: {e}")
+        finally:
+            self.session.close()
 
     def fetch_gen_global_search_history(self, start_date=None, end_date=None):
         try:
@@ -160,6 +167,8 @@ class DatabaseFetcher:
             return df_search_history
         except Exception as e:
             print(f"Error fetching gen global search history: {e}")
+        finally:
+            self.session.close()
 
     def insert_cleaned_navigation_history(self, df):
         try:
@@ -184,3 +193,5 @@ class DatabaseFetcher:
         except Exception as e:
             self.session.rollback()  # Rollback the transaction if there's an error
             print(f"Error inserting cleaned search history: {e}")
+        finally:
+            self.session.close()

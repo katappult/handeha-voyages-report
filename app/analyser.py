@@ -16,6 +16,10 @@ def analyser(start_date, end_date, period_type):
         df_navigation_history = fetcher.fetch_gen_global_navigation_history(start_date, end_date)
         df_search_history = fetcher.fetch_gen_global_search_history(start_date, end_date)
 
+        if df_navigation_history.empty or df_search_history.empty:
+            print("No data to analyse")
+            return
+
         df_navigation_history_with_country = analyzer.set_country(df_navigation_history)
         df_search_history_with_country = analyzer.set_country(df_search_history)
 
@@ -72,5 +76,5 @@ def analyser(start_date, end_date, period_type):
 
 
 if __name__ == '__main__':
-    analyser(datetime.strptime("2024-9-16 11:40", "%Y-%m-%d %H:%M"),
-             datetime.strptime("2024-10-22 11:40", "%Y-%m-%d %H:%M"), "week")
+    analyser(datetime.strptime("2019-9-16 11:40", "%Y-%m-%d %H:%M"),
+             datetime.strptime("2028-10-22 11:40", "%Y-%m-%d %H:%M"), "week")

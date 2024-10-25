@@ -166,7 +166,6 @@ def get_global_search_region(df, start_date, end_date, diagram=None):
 
 
 def get_global_sale(df, start_date, end_date, period_type, diagram=None):
-    print("debug ", df)
     # Ensure 'CREATE_DATE' is a datetime type
     df['create_date'] = pd.to_datetime(df['create_date'])
 
@@ -243,7 +242,6 @@ def get_voyage_sale(df, voyage_id, start_date, end_date, period_type, diagram=No
         Nb_de_Vente=('url_visited', lambda x: x.str.contains('/buy').sum())
     ).reset_index()
 
-    # Convert 'PERIOD' to string for proper plotting
     result['period'] = result['period'].astype(str)
 
     # Prepare the parameters for the multi-line chart
@@ -252,11 +250,7 @@ def get_voyage_sale(df, voyage_id, start_date, end_date, period_type, diagram=No
     chart_title = f'Sales and Devis for Voyage {voyage_id}'
     custom_colors = ['red', 'blue']  # Colors for the lines
 
-    # Create the DataVisualizer instance
     visualizer = DataVisualizer()
-
     if diagram:
-        # Use the visualizer to create the multi-line chart
         visualizer.create_multi_line_chart(result, x_column, y_columns, chart_title, colors=custom_colors)
-
     return result
