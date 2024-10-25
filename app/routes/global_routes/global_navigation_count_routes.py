@@ -86,9 +86,13 @@ class GlobalNavigationCount(Resource):
 
         new_df = fetcher.fetch_cleaned_search_history(start_date, end_date)
 
-        result = get_country_count(new_df)
+        if new_df.empty:
+            return jsonify([])
 
-        # Convert result to JSON format
-        result_json = result.to_dict(orient='records')
+        else:
+            result = get_country_count(new_df)
 
-        return jsonify(result_json)
+            # Convert result to JSON format
+            result_json = result.to_dict(orient='records')
+
+            return jsonify(result_json)

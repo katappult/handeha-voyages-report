@@ -89,7 +89,11 @@ class GlobalVoyageCount(Resource):
 
         result = get_voyage_count(new_df)
 
-        result_json = result.apply(lambda x: x.map(lambda y: str(y) if isinstance(y, pd.Period) else y)).to_dict(
-            orient='records')
+        if new_df.empty:
+            return jsonify([])
 
-        return jsonify(result_json)
+        else:
+            result_json = result.apply(lambda x: x.map(lambda y: str(y) if isinstance(y, pd.Period) else y)).to_dict(
+                orient='records')
+
+            return jsonify(result_json)

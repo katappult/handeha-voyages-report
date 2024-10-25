@@ -86,10 +86,13 @@ class GlobalSearchRegions(Resource):
         # Fetch table and process data
         new_df = fetcher.fetch_cleaned_search_history(start_date, end_date)
 
-        result = get_global_search_region(new_df, start_date, end_date)
+        if new_df.empty:
+            return jsonify([])
 
-        # Convert the DataFrame to a JSON-serializable format
-        # Use 'orient=records' to get a list of dictionaries
-        result_json = result.map(lambda x: str(x) if isinstance(x, pd.Period) else x).to_dict(orient='records')
+        else:
+            result = get_global_search_region(new_df, start_date, end_date)
+            # Convert the DataFrame to a JSON-serializable format
+            # Use 'orient=records' to get a list of dictionaries
+            result_json = result.map(lambda x: str(x) if isinstance(x, pd.Period) else x).to_dict(orient='records')
 
-        return jsonify(result_json)
+            return jsonify(result_json)

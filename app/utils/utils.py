@@ -166,6 +166,7 @@ def get_global_search_region(df, start_date, end_date, diagram=None):
 
 
 def get_global_sale(df, start_date, end_date, period_type, diagram=None):
+    print("debug ", df)
     # Ensure 'CREATE_DATE' is a datetime type
     df['create_date'] = pd.to_datetime(df['create_date'])
 

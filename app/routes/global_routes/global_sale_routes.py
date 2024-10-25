@@ -91,8 +91,8 @@ class GlobalSale(Resource):
             return jsonify({'error': 'End date must be greater than start date'}), 400
 
         new_df = fetcher.fetch_cleaned_navigation_history(start_date, end_date)
-        result = get_global_sale(new_df, start_date, end_date, period_type)
-
-        result_json = result.to_dict(orient='records')
-
-        return jsonify(result_json)
+        if new_df.empty:
+            return jsonify([])
+        else:
+            result = get_global_sale(new_df, start_date, end_date, period_type)
+            return result.to_dict(orient='records')

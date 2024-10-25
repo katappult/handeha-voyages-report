@@ -87,9 +87,13 @@ class GlobalSearchThemes(Resource):
         # Fetch table and process data
         new_df = fetcher.fetch_cleaned_search_history(start_date, end_date)
 
-        result = get_global_search_theme(new_df, start_date, end_date)
+        if new_df.empty:
+            return jsonify([])
 
-        # Convert result to JSON format
-        result_json = result.map(lambda x: str(x) if isinstance(x, pd.Period) else x).to_dict(orient='records')
+        else:
+            result = get_global_search_theme(new_df, start_date, end_date)
 
-        return jsonify(result_json)
+            # Convert result to JSON format
+            result_json = result.map(lambda x: str(x) if isinstance(x, pd.Period) else x).to_dict(orient='records')
+
+            return jsonify(result_json)

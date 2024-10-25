@@ -84,9 +84,10 @@ class GlobalDeviceCount(Resource):
 
         # Fetch table and process data
         new_df = fetcher.fetch_cleaned_navigation_history(start_date, end_date)
-        result = get_device_count(new_df)
 
-        # Convert result to JSON format
-        result_json = result.to_dict(orient='records')
-
-        return jsonify(result_json)
+        if new_df.empty:
+            return jsonify([])
+        else:
+            result = get_device_count(new_df)
+            result_json = result.to_dict(orient='records')
+            return jsonify(result_json)
