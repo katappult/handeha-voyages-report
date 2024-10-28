@@ -12,6 +12,7 @@ class CleanedSearchHistory(Base):
     __tablename__ = 'cleaned_search_history'
     id = Column(Integer, primary_key=True)
     create_date = Column(TIMESTAMP)
+    created_by = Column(String(255))
     operating_system = Column(String(255))
     browser = Column(String(255))
     local_ip_address = Column(String(255))
@@ -29,6 +30,7 @@ class CleanedNavigationHistory(Base):
     __tablename__ = 'cleaned_navigation_history'
     id = Column(Integer, primary_key=True)
     create_date = Column(TIMESTAMP)
+    created_by = Column(String(255))
     referer = Column(String(255))
     operating_system = Column(String(255))
     browser = Column(String(255))
@@ -45,6 +47,7 @@ class GenGlobalNavigationHistory(Base):
     __tablename__ = 'gen_global_navigation_history'
     oid = Column(Integer, primary_key=True)
     create_date = Column(TIMESTAMP)
+    created_by = Column(String(255))
     operating_system = Column(String(255))
     referer = Column(String(255))
     browser = Column(String(255))
@@ -63,6 +66,7 @@ class GenGlobalSearchHistory(Base):
     __tablename__ = 'gen_global_search_history'
     oid = Column(Integer, primary_key=True)
     create_date = Column(TIMESTAMP)
+    created_by = Column(String(255))
     operating_system = Column(String(255))
     browser = Column(String(255))
     local_ip_address = Column(String(255))

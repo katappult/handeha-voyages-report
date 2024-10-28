@@ -254,3 +254,49 @@ def get_voyage_sale(df, voyage_id, start_date, end_date, period_type, diagram=No
     if diagram:
         visualizer.create_multi_line_chart(result, x_column, y_columns, chart_title, colors=custom_colors)
     return result
+
+
+
+def get_tour_operateur_sale(df, voyage_id, start_date, end_date, period_type, diagram=None):
+    # Ensure 'CREATE_DATE' is a datetime type
+    df['create_date'] = pd.to_datetime(df['create_date'])
+
+    # Determine the period frequency based on period_type
+    if period_type == 'year':
+        period_freq = 'Y'
+    elif period_type == 'month':
+        period_freq = 'M'
+    elif period_type == 'week':
+        period_freq = 'W'
+    elif period_type == 'day':
+        period_freq = 'D'
+    else:
+        raise ValueError("Invalid period_type. Must be 'year', 'month', 'week' or 'day'.")
+
+    # Filter the data for the given voyage_id and between start_date and end_date
+    df = df[(df['voyage_identifier'] == voyage_id) &
+            (df['create_date'] >= pd.to_datetime(start_date)) &
+            (df['create_date'] <= pd.to_datetime(end_date))]
+
+    # Create period column
+    df['period'] = df['create_date'].dt.to_period(period_freq)
+
+    # Group by the determined period and calculate the number of '/devis' and '/buy'
+    result = df.groupby('period').agg(
+        Nb_de_Devis=('url_visited', lambda x: x.str.contains('/devis').sum()),
+        Nb_de_Vente=('url_visited', lambda x: x.str.contains('/buy').sum())
+    ).reset_index()
+
+    result['period'] = result['period'].astype(str)
+
+    # Prepare the parameters for the multi-line chart
+    x_column = 'period'  # x-axis for the chart
+    y_columns = ['Nb_de_Devis', 'Nb_de_Vente']  # y-axis columns
+    chart_title = f'Sales and Devis for Voyage {voyage_id}'
+    custom_colors = ['red', 'blue']  # Colors for the lines
+
+    visualizer = DataVisualizer()
+    if diagram:
+        visualizer.create_multi_line_chart(result, x_column, y_columns, chart_title, colors=custom_colors)
+    return result
+
