@@ -256,12 +256,9 @@ def get_voyage_sale(df, voyage_id, start_date, end_date, period_type, diagram=No
     return result
 
 
-
-def get_tour_operateur_sale(df, voyage_id, start_date, end_date, period_type, diagram=None):
-    # Ensure 'CREATE_DATE' is a datetime type
+def get_tour_operateur_sale(df, user, start_date, end_date, period_type, diagram=None):
     df['create_date'] = pd.to_datetime(df['create_date'])
 
-    # Determine the period frequency based on period_type
     if period_type == 'year':
         period_freq = 'Y'
     elif period_type == 'month':
@@ -274,7 +271,7 @@ def get_tour_operateur_sale(df, voyage_id, start_date, end_date, period_type, di
         raise ValueError("Invalid period_type. Must be 'year', 'month', 'week' or 'day'.")
 
     # Filter the data for the given voyage_id and between start_date and end_date
-    df = df[(df['voyage_identifier'] == voyage_id) &
+    df = df[(df['created_by'] == user) &
             (df['create_date'] >= pd.to_datetime(start_date)) &
             (df['create_date'] <= pd.to_datetime(end_date))]
 
@@ -292,11 +289,10 @@ def get_tour_operateur_sale(df, voyage_id, start_date, end_date, period_type, di
     # Prepare the parameters for the multi-line chart
     x_column = 'period'  # x-axis for the chart
     y_columns = ['Nb_de_Devis', 'Nb_de_Vente']  # y-axis columns
-    chart_title = f'Sales and Devis for Voyage {voyage_id}'
+    chart_title = f'Sales and Devis for {user}'
     custom_colors = ['red', 'blue']  # Colors for the lines
 
     visualizer = DataVisualizer()
     if diagram:
         visualizer.create_multi_line_chart(result, x_column, y_columns, chart_title, colors=custom_colors)
     return result
-

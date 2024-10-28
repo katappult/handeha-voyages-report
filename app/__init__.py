@@ -20,6 +20,7 @@ from app.routes.global_routes.global_sale_routes import GlobalSale
 from app.routes.global_routes.global_search_regions_routes import GlobalSearchRegions
 from app.routes.global_routes.global_search_themes_routes import GlobalSearchThemes
 from app.routes.global_routes.global_voyage_count_routes import GlobalVoyageCount
+from app.routes.tour_operateur_routes.tour_operateur_sale_routes import TourOperateurSale
 from app.routes.voyage_routes.voyage_country_count_routes import VoyageCountryCount
 from app.routes.voyage_routes.voyage_sale_routes import VoyageSale
 from app.utils.database import Base
@@ -94,5 +95,6 @@ def create_app():
     api.add_resource(GlobalSale, '/global_sale')
     api.add_resource(VoyageSale, '/voyage_sale')
     api.add_resource(VoyageCountryCount, '/voyage_country_count')
+    api.add_resource(TourOperateurSale, '/tour_operateur_sale')
 
     return app
