@@ -75,10 +75,10 @@ class VoyageCountryCount(Resource):
         fetcher = Fetcher.fetcher
 
         try:
-            start_date = datetime.strptime(start_date_str, "%Y-%m-%d %H:%M")
-            end_date = datetime.strptime(end_date_str, "%Y-%m-%d %H:%M")
+            start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+            end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
         except ValueError:
-            return jsonify({'error': 'Invalid date format. Use YYYY-MM-DD HH:MM'}), 400
+            return jsonify({'error': 'Invalid date format. Use YYYY-MM-DD'}), 400
 
         # Ensure end_date is greater than start_date
         if end_date <= start_date:

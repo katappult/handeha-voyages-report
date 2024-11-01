@@ -20,13 +20,13 @@ class GlobalSale(Resource):
               in: query
               type: string
               required: true
-              description: The start date in the format YYYY-MM-DD HH:MM:SS
+              description: The start date in the format YYYY-MM-DD
               example: "2024-01-01 00:00:00"
             - name: end_date
               in: query
               type: string
               required: true
-              description: The end date in the format YYYY-MM-DD HH:MM:SS
+              description: The end date in the format YYYY-MM-DD
               example: "2024-01-02 23:59:59"
             - name: period_type
               in: query
@@ -69,7 +69,7 @@ class GlobalSale(Resource):
                         examples:
                             invalid_date_format:
                                 summary: Invalid date format
-                                value: { "error": "Invalid date format. Use YYYY-MM-DD HH:MM:SS" }
+                                value: { "error": "Invalid date format. Use YYYY-MM-DD" }
                             end_date_error:
                                 summary: End date less than or equal to start date
                                 value: { "error": "End date must be greater than start date" }
@@ -82,10 +82,10 @@ class GlobalSale(Resource):
         fetcher = Fetcher.fetcher
 
         try:
-            start_date = datetime.strptime(start_date_str, "%Y-%m-%d %H:%M")
-            end_date = datetime.strptime(end_date_str, "%Y-%m-%d %H:%M")
+            start_date = datetime.strptime(start_date_str, "%Y-%m-%d")
+            end_date = datetime.strptime(end_date_str, "%Y-%m-%d")
         except ValueError:
-            return jsonify({'error': 'Invalid date format. Use YYYY-MM-DD HH:MM'}), 400
+            return jsonify({'error': 'Invalid date format. Use YYYY-MM-DD'}), 400
 
         if end_date <= start_date:
             return jsonify({'error': 'End date must be greater than start date'}), 400

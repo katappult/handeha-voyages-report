@@ -76,5 +76,5 @@ def analyser(start_date, end_date, period_type):
 
 
 if __name__ == '__main__':
-    analyser(datetime.strptime("2019-9-16 11:40", "%Y-%m-%d %H:%M"),
-             datetime.strptime("2028-10-22 11:40", "%Y-%m-%d %H:%M"), "week")
+    analyser(datetime.strptime("2019-9-16 11:40", "%Y-%m-%d"),
+             datetime.strptime("2028-10-22 11:40", "%Y-%m-%d"), "week")

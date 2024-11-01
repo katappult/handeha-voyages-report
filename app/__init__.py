@@ -49,7 +49,7 @@ def create_app():
         end_date = datetime.now() - timedelta(days=1)
         period_type = "day"
         print("Daily data analysis")
-        analyser(start_date.strftime("%Y-%m-%d %H:%M"), end_date.strftime("%Y-%m-%d %H:%M"), period_type)
+        analyser(start_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d"), period_type)
 
     # Weekly job
     @scheduler.scheduled_job(
@@ -59,7 +59,7 @@ def create_app():
         end_date = datetime.now() - timedelta(days=1)
         period_type = "week"
         print("Weekly data analysis")
-        analyser(start_date.strftime("%Y-%m-%d %H:%M"), end_date.strftime("%Y-%m-%d %H:%M"), period_type)
+        analyser(start_date.strftime("%Y-%m-%d"), end_date.strftime("%Y-%m-%d"), period_type)
 
     # Monthly job
     @scheduler.scheduled_job(CronTrigger(day=MONTHLY_CRON_DAY, hour=MONTHLY_CRON_HOURS, minute=MONTHLY_CRON_MINUTES))
